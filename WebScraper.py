@@ -4,7 +4,7 @@ import shutil # to save it locally
 
 ## Set up the image URL and filename
 image_url = "https://thispersondoesnotexist.com/image"
-filename = "face2.jpg"
+filename = "faces/face.jpg"
 
 # Open the url image, set stream to True, this will return the stream content.
 r = requests.get(image_url, stream = True)
@@ -18,6 +18,6 @@ if r.status_code == 200:
     with open(filename,'wb') as f:
         shutil.copyfileobj(r.raw, f)
         
-    print('Image sucessfully Downloaded: ',filename)
+    print('Image successfully Downloaded: ',filename)
 else:
-    print('Image Couldn\'t be retreived')
+    print('Image Couldn\'t be retrieved')
