@@ -1,23 +1,20 @@
 # Runs initially to fill in faces dataset
-import requests # to get image from the web
-import shutil # to save it locally
+# Adapted from https://towardsdatascience.com/how-to-download-an-image-using-python-38a75cfa21c
 
-## Set up the image URL and filename
-image_url = "https://thispersondoesnotexist.com/image"
-filename = "faces/face.jpg"
+import requests
+import shutil
+import time
 
-# Open the url image, set stream to True, this will return the stream content.
-r = requests.get(image_url, stream = True)
+url = "https://thispersondoesnotexist.com/image"
+r = requests.get(url, stream = True)
 
-# Check if the image was retrieved successfully
-if r.status_code == 200:
-    # Set decode_content value to True, otherwise the downloaded image file's size will be zero.
-    r.raw.decode_content = True
+n = 5 # Number of faces
+
+for i in range(0, n):
+    file_name = f"faces/face{n}.jpg"
+    if r.status_code == 200: # Successfully retrieved
+        # Set decode_content value to True (otherwise the downloaded image file's size will be zero)
+        r.raw.decode_content = True
+        with open(file_name,'wb') as f: # open local file (wb)
+            shutil.copyfileobj(r.raw, f)
     
-    # Open a local file with wb ( write binary ) permission.
-    with open(filename,'wb') as f:
-        shutil.copyfileobj(r.raw, f)
-        
-    print('Image successfully Downloaded: ',filename)
-else:
-    print('Image Couldn\'t be retrieved')
