@@ -6,15 +6,19 @@ import shutil
 import time
 
 url = "https://thispersondoesnotexist.com/image"
-r = requests.get(url, stream = True)
 
-n = 5 # Number of faces
+n = 30 # Number of faces
 
-for i in range(0, n):
-    file_name = f"faces/face{n}.jpg"
+for i in range(n):
+    time.sleep(1) # allows time to reload page + avoids repeats
+    
+    file_name = f"faces/face-{i}.jpg"
+
+    r = requests.get(url, stream = True)
     if r.status_code == 200: # Successfully retrieved
         # Set decode_content value to True (otherwise the downloaded image file's size will be zero)
         r.raw.decode_content = True
         with open(file_name,'wb') as f: # open local file (wb)
             shutil.copyfileobj(r.raw, f)
+
     
