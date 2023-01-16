@@ -6,15 +6,13 @@ import shutil
 import time
 
 url = "https://thispersondoesnotexist.com/image"
+N = 30  # number of faces to generate
 
-n = 30 # Number of faces
-
-for i in range(n):
-    time.sleep(1) # allows time to reload page + avoids repeats
-    
+for i in range(N):
+    time.sleep(1) # allows time to reload page + avoid repeats
     file_name = f"faces/face-{i}.jpg"
-
     r = requests.get(url, stream = True)
+    
     if r.status_code == 200: # Successfully retrieved
         # Set decode_content value to True (otherwise the downloaded image file's size will be zero)
         r.raw.decode_content = True
